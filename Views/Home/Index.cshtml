@@ -13,8 +13,12 @@
                 
                 @if (ViewBag.Cover != null)
                 {
-                    <img src="@ViewBag.Cover[product.Id]" />
-                }
+                        @foreach(var img in ViewBag.Cover)
+                        {
+                            <img src="@img" />
+                        }
+                    }
+                    
                 <div class="card-body">
                     <h5 class="card-title">Nome Prodotto: @product.Name </h5>
                     <p class="card-text">Descrizione Prodotto: @product.Description </p>

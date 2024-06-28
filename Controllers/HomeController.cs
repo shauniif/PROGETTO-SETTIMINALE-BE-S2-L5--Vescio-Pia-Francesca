@@ -18,20 +18,20 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Controllers
             _env = env;
         }
         public IActionResult Index()
-        {  // ho usato le dictioary per salvare coppia chiave valore dell'immagine associata all'id
-            Dictionary<int, string> productImages = new Dictionary<int, string>();
-            List <int> productImagess = new List<int>();
-            
+        {
+            var productImages = new List<string>();
+
+
 
             var products = _productService.GetAllProducts();
            foreach(var product in products)
-            {
-                string uploads = Path.Combine(_env.WebRootPath, "images");
-                string image = Path.ChangeExtension(Path.Combine(uploads, product.Name.ToString()),"jpg");
-                if (System.IO.File.Exists(image))
-                    productImages[product.Id] = $"/images/{product.Name}.jpg";
-                productImagess.Add(product.Id);
-            }
+          {
+         string uploads = Path.Combine(_env.WebRootPath, "images");
+         string image = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString()),"jpg");
+         if (System.IO.File.Exists(image))
+            productImages.Add($"/images/{product.Id}.jpg");
+               
+         }
             ViewBag.Cover = productImages; 
             return View(products);
         }
@@ -45,25 +45,25 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Controllers
        
         public IActionResult CreateProduct(ProductInputModel product)
         {   
-            var prod = new Product { Name = product.Name, Description = product.Description, Price = product.Price, Cover = product.Cover, AdditionalImage1 = product.AdditionalImage1, AdditionalImage2 = product.AdditionalImage2 };
+            var prod = new Product { Name = product.Name, Description = product.Description, Price = product.Price };
             _productService.Create(prod);
             string uploads = Path.Combine(_env.WebRootPath, "images");
             if (product.Cover.Length > 0)
-            { // qui ho usato il Name piuttosto che l'id perché mi trovavo meglio, ma so che nel lavoro si predilige l'id per l'univocità
+            { 
 
-                string filePath = Path.ChangeExtension(Path.Combine(uploads, prod.Name.ToString()), "jpg");
+                string filePath = Path.ChangeExtension(Path.Combine(uploads, prod.Id.ToString()), "jpg");
                 using Stream fileStream = new FileStream(filePath, FileMode.Create);
                 product.Cover.CopyTo(fileStream);
             }
             if (product.AdditionalImage1.Length > 0)
             {
-                string filePath1 = Path.ChangeExtension(Path.Combine(uploads, prod.Name.ToString() + "1"), "jpg");
+                string filePath1 = Path.ChangeExtension(Path.Combine(uploads, prod.Id.ToString() + "1"), "jpg");
                 using Stream fileStream = new FileStream(filePath1, FileMode.Create);
                 product.AdditionalImage1.CopyTo(fileStream);
             }
             if (product.AdditionalImage2.Length > 0)
             {
-                string filePath2 = Path.ChangeExtension(Path.Combine(uploads, prod.Name.ToString() + "2"), "jpg");
+                string filePath2 = Path.ChangeExtension(Path.Combine(uploads, prod.Id.ToString() + "2"), "jpg");
                 using Stream fileStream = new FileStream(filePath2, FileMode.Create);
                 product.AdditionalImage2.CopyTo(fileStream);
             }
@@ -73,16 +73,16 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Controllers
             var product = _productService.GetById(id);
             string uploads = Path.Combine(_env.WebRootPath, "images");
             string image = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString()), "jpg");
-            string imageextra1 = Path.ChangeExtension(Path.Combine(uploads, product.Name.ToString() + "1"), "jpg");
-            string imageextra2 = Path.ChangeExtension(Path.Combine(uploads, product.Name.ToString() + "2"), "jpg");
+            string imageextra1 = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString() + "1"), "jpg");
+            string imageextra2 = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString() + "2"), "jpg");
             var imagePaths = new List<string>();
 
             if (System.IO.File.Exists(image))
-                imagePaths.Add($"/images/{product.Name}.jpg");
+                imagePaths.Add($"/images/{product.Id}.jpg");
             if (System.IO.File.Exists(imageextra1))
-                imagePaths.Add($"/images/{product.Name}1.jpg");
+                imagePaths.Add($"/images/{product.Id}1.jpg");
             if (System.IO.File.Exists(imageextra2))
-                imagePaths.Add($"/images/{product.Name}2.jpg");
+                imagePaths.Add($"/images/{product.Id}2.jpg");
             ViewBag.ImagePaths = imagePaths;
             return View(product);
         }
