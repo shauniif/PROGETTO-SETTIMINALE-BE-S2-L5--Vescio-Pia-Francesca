@@ -1,0 +1,67 @@
+﻿@model PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Models.ProductInputModel
+
+@{
+    ViewData["Title"] = "CreateProduct";
+}
+
+
+<h1>Inserisci il tuo prodotto:</h1>
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="CreateProduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="10" cols="60"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="Cover" class="control-label"></label>
+                    <input asp-for="Cover" class="form-control" />
+                    <span asp-validation-for="Cover" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="AdditionalImage1" class="control-label"></label>
+                    <input asp-for="AdditionalImage1" class="form-control" />
+                    <span asp-validation-for="AdditionalImage1" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="AdditionalImage2" class="control-label"></label>
+                    <input asp-for="AdditionalImage2" class="form-control" />
+                    <span asp-validation-for="AdditionalImage2" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group mt-3 text-center">
+                <input type="submit" value="Create" class="btn btn-info text-light" />
+            </div>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

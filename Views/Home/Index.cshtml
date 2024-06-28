@@ -1,0 +1,35 @@
+﻿@using PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Entities;
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @if (Model.Any())
+    {
+        @foreach (var product in Model)
+        {   <div class="col-lg-4">
+            <div class="card" style="width: 18rem;">
+                
+                @if (ViewBag.Cover != null)
+                {
+                    <img src="@ViewBag.Cover[product.Id]" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">Nome Prodotto: @product.Name </h5>
+                    <p class="card-text">Descrizione Prodotto: @product.Description </p>
+                    <p class="card-text">Prezzo: <span class="text-success">@product.Price</span></p>
+                    <a asp-action="Detail" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-secondary">Vai ai dettagli</a>
+                </div>
+
+                </div>
+            </div>
+            
+        }
+
+    } else
+    {
+        <div class="row"><div class="col text-center alert alert-danger">Non ci sono ancora articoli. Inseriscili!</div></div>
+        <a asp-controller="Home" asp-action="CreateProduct" class="btn btn-primary">Aggiungi prodotti</a>
+    }
+</div>
