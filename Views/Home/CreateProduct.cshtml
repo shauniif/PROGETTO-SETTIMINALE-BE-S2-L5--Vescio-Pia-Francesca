@@ -14,23 +14,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" placeholder="scrivi il nome della scarpa..."/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" rows="10" cols="60"></textarea>
+                <textarea asp-for="Description" class="form-control" rows="10" cols="60" placeholder="Scrivi una breve descrizione della scarpa..."></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control" placeholder="Scrivi un prezzo" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="form-group">
                     <label asp-for="Cover" class="control-label"></label>
-                    <input asp-for="Cover" class="form-control" />
+                    <input asp-for="Cover" class="form-control"/>
                     <span asp-validation-for="Cover" class="text-danger"></span>
                 </div>
             </div>

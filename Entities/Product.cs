@@ -10,7 +10,7 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Entities
         public string Description { get; set; }
       
 
-        public decimal Price { get; set; } = 0;
+        public int Price { get; set; } = 0;
        
         public IFormFile Cover { get; set; }
        
