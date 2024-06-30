@@ -11,9 +11,10 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Entities
       
 
         public int Price { get; set; } = 0;
-       
-       
 
-       
+        public string Cover { get; set; }
+        public string AdditionalImage1 { get; set; }
+        public string AdditionalImage2 { get; set; }
+
     }
 }

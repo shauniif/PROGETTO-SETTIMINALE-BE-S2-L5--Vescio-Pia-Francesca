@@ -10,15 +10,7 @@
         @foreach (var product in Model)
         {   <div class="col-lg-4">
             <div class="card" style="width: 18rem;">
-                
-                @if (ViewBag.Cover != null)
-                {
-                        @foreach(var img in ViewBag.Cover)
-                        {
-                            <img src="@img" />
-                        }
-                    }
-                    
+               <img src="@product.Cover" />
                 <div class="card-body">
                     <h5 class="card-title">Nome Prodotto: @product.Name </h5>
                     <p class="card-text">Descrizione Prodotto: @product.Description </p>

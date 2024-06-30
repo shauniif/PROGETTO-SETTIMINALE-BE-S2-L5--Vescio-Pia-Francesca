@@ -13,7 +13,6 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Models
         public string Description { get; set; }
 
         [Display(Name = "Prezzo")]
-        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         public int Price { get; set; } = 0;
 
         [Display(Name = "Immagine principale")]

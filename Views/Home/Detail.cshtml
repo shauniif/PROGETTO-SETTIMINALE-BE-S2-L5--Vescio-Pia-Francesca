@@ -4,7 +4,6 @@
 
 @{
     ViewData["Title"] = "Detail";
-    var imagePaths = ViewBag.ImagePaths as List<string>;
 }
 
 <h1>Detail</h1>
@@ -13,13 +12,10 @@
     <h4>Immagine del prodotto:</h4>
     <hr />
     <div class="col-lg-12 d-flex justify-content-evenly border border-bottom-1 mb-4">
-        @if (imagePaths != null)
-        {
-            foreach (var image in imagePaths)
-            {
-                <img class="img-thumbnail border border-0 w-25" src="@image" />
-            }
-        }
+       
+        <img class="img-thumbnail border border-0 w-25" src="@Model.Cover" />
+        <img class="img-thumbnail border border-0 w-25" src="@Model.AdditionalImage1" />
+        <img class="img-thumbnail border border-0 w-25" src="@Model.AdditionalImage2" />
     </div>
     <h4>Informazioni aggiuntive del prodotto:</h4>
     <table class="table table-hover">

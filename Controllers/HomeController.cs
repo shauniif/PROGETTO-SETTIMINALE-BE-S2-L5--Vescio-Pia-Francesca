@@ -19,20 +19,20 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Controllers
         }
         public IActionResult Index()
         {
-            var productImages = new List<string>();
-
-
 
             var products = _productService.GetAllProducts();
-           foreach(var product in products)
-          {
-         string uploads = Path.Combine(_env.WebRootPath, "images");
-         string image = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString()),"jpg");
-         if (System.IO.File.Exists(image))
-            productImages.Add($"/images/{product.Id}.jpg");
-               
-         }
-            ViewBag.Cover = productImages; 
+
+            // Per ogni prodotto inserisco la source che verrà mostrata a schermo della Cover del prodotto
+                foreach(var product in products)
+                {
+                     string uploads = Path.Combine(_env.WebRootPath, "images");
+                     string image = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString()),"jpg");
+                            if (System.IO.File.Exists(image))
+                    
+                            product.Cover = $"/images/{product.Id}.jpg";
+
+                }
+
             return View(products);
         }
         public IActionResult CreateProduct()
@@ -44,25 +44,36 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Controllers
         [HttpPost]
        
         public IActionResult CreateProduct(ProductInputModel product)
-        {   
-            var prod = new Product { Name = product.Name, Description = product.Description, Price = product.Price };
+        {
+            
+            var prod = new Product
+            {
+                Name = product.Name,          
+                Description = product.Description,  
+                Price = product.Price         
+            };
+
+            
             _productService.Create(prod);
+            //ottengo il percorso dove adranno inserite le immagini
             string uploads = Path.Combine(_env.WebRootPath, "images");
             if (product.Cover.Length > 0)
             { 
-
+                // inserimento Prima immagine
                 string filePath = Path.ChangeExtension(Path.Combine(uploads, prod.Id.ToString()), "jpg");
                 using Stream fileStream = new FileStream(filePath, FileMode.Create);
                 product.Cover.CopyTo(fileStream);
             }
             if (product.AdditionalImage1.Length > 0)
             {
+                // inserimento Seconda immagine
                 string filePath1 = Path.ChangeExtension(Path.Combine(uploads, prod.Id.ToString() + "1"), "jpg");
                 using Stream fileStream = new FileStream(filePath1, FileMode.Create);
                 product.AdditionalImage1.CopyTo(fileStream);
             }
             if (product.AdditionalImage2.Length > 0)
             {
+                // inserimento Terza immagine
                 string filePath2 = Path.ChangeExtension(Path.Combine(uploads, prod.Id.ToString() + "2"), "jpg");
                 using Stream fileStream = new FileStream(filePath2, FileMode.Create);
                 product.AdditionalImage2.CopyTo(fileStream);
@@ -70,20 +81,33 @@ namespace PROGETTO_SETTIMINALE_BE_S2_L5__Vescio_Pia_Francesca.Controllers
             return RedirectToAction("Index");
         }
         public IActionResult Detail(int id) {
+            // ottengo il prodotto 
             var product = _productService.GetById(id);
             string uploads = Path.Combine(_env.WebRootPath, "images");
-            string image = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString()), "jpg");
-            string imageextra1 = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString() + "1"), "jpg");
-            string imageextra2 = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString() + "2"), "jpg");
-            var imagePaths = new List<string>();
 
+            // Percorso della Cover del prodotto
+            string image = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString()), "jpg");
+
+            // Percorso della AdditionalImage1 del prodotto
+            string imageextra1 = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString() + "1"), "jpg");
+
+            // Percorso della AdditionalImage2 del prodotto
+            string imageextra2 = Path.ChangeExtension(Path.Combine(uploads, product.Id.ToString() + "2"), "jpg");
+
+
+            // imposto la proprietà Cover del prodotto
             if (System.IO.File.Exists(image))
-                imagePaths.Add($"/images/{product.Id}.jpg");
+                product.Cover = $"/images/{product.Id}.jpg";
+
+            // imposto la proprietà AdditionalImage1 del prodotto
             if (System.IO.File.Exists(imageextra1))
-                imagePaths.Add($"/images/{product.Id}1.jpg");
+                product.AdditionalImage1 = $"/images/{product.Id}1.jpg";
+
+            // imposto la proprietà AdditionalImage2 del prodotto
             if (System.IO.File.Exists(imageextra2))
-                imagePaths.Add($"/images/{product.Id}2.jpg");
-            ViewBag.ImagePaths = imagePaths;
+                product.AdditionalImage2 = $"/images/{product.Id}2.jpg";
+
+           
             return View(product);
         }
         
